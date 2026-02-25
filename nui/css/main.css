@@ -2476,3 +2476,33 @@ canvas{
 #myinformationWrap > div.myCarNumber::before{
   content: "차 량 번 호";
 }
+
+#container>.headupDisplay {
+  position: absolute;
+  transform: translate(-50%, -50%) scale(0);
+  width: 60px;
+  height: 60px;
+  background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  background-position: center;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  transform-origin: bottom;
+  z-index: 99;
+  animation: headupDisplay 500ms ease-in-out forwards;
+}
+
+@keyframes headupDisplay {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
