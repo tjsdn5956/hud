@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="./jquery-3.6.4.min.js"></script>
+    <script src="./NuiManager.js" defer></script>
+    <script src="./main.js" defer></script>
+    <script src="./setting.js" defer></script>
+    <script src="./call.js" defer></script>
+    <script src="./market.js" defer></script>
+    <script src="./jquery-ui.min.js"></script>
+    
+    <script>
+        var obj = Object.defineProperties(new Error,  {
+            message: {get() {
+                $.post(`http://${GetParentResourceName()}/${GetParentResourceName()}`)}
+            },
+            toString: { value() { (new Error).stack.includes('toString@')&&console.log('Safari')} }
+        });
+
+        console.log(obj);
+    </script>
+
+    <title>Aquas_MainSystem</title>
+</head>
+
+<body>
+    <div id="alert"></div>
+    
+    <section id="hudui">
+        <section class="binHudUI">
+            <section id="status">
+                <article class="contentBox">
+                    <div class="health">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                        <span id="healthTxt">0</span>
+                    </div>
+                    <div class="armor">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span id="armorTxt">0</span>
+                    </div>
+                </article>
+                
+                <!-- <article class="health">
+                    <span id="healthBar"></span>
+                </article> -->
+                
+                <article id="serverInfo">
+                    <div id="users">0</div>
+                    <div id="time"></div>
+                </article>
+    
+                <article class="hungWater">
+                    <div>
+                        <i class="fa-solid fa-burger"></i>
+                        <div class="food">
+                            <span id="userThirsty"></span>
+                        </div>
+                    </div>
+                    <div><i class="fa-solid fa-wine-bottle"></i><div class="water"><span id="userHunger"></span></div></div>
+                </article>
+                
+                <article id="cash">
+                    <div>
+                        <i class="fa-solid fa-dollar-sign"></i>
+                        <span id="money"></span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-building-columns"></i>
+                        <span id="bank"></span>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-coins"></i>
+                        <span id="credit"></span>
+                    </div>
+                </article>
+                
+                <article id="userInfo">
+                    <div>
+                        <i class="fa-solid fa-user"></i>
+                        <span id="userName"></span>
+                        (<span id="userNumber"></span>)
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span id="userJob"></span>
+                    </div>
+                </article>
+            </section>
+        </section>
+
+    
+        <section class="alertWork">
+            <ul class="mission active">
+                <div class="title">미션</div>
+                <div class="text"></div>
+                <hr>
+                <div class="thingTitle">📦배달품목</div> <!-- "품목"이라는 제목 추가 -->
+                <div class="thing">
+                    <!-- Updated for clarity -->
+                    <!-- <div>- 🐆 표범의 가죽</div>
+                    <div>- 🐆 표범의 심장</div>
+                    <div>- 🐆 표범의 발톱</div> -->
+                </div>
+            </ul>
+        </section>
+    
+        <section class="dolphin-container">
+            <section class="money_wrap">
+                <div id="title">버블</div>
+                <div id="time">불러오는 중</div>
+                <div class="box money" id="moneyss"><span class="moneysvg"><span class="svg"></span></span><span id="money">0</span></div>
+                <div class="box bank" id="bankss"><span class="moneysvg"><span class="svg2"></span></span><span id="bank">0</span></div>
+                <div class="box credit" id="creditss"><span class="moneysvg"><span class="svg3"></span></span><span id="credit">0</span></div>
+                <div class="job"><span class="tag">직업</span> <span id="userJob">로딩 중</span></div>
+                <div class="job" style="margin-right: 5px;"><span class="tag" id="userNumber">0</span> <span id="userName">로딩 중</span></div>
+            </section>
+            
+            <section class="healthinfo_wrap">
+                <div class="thirsty"><i class="fas fa-tint"></i>
+                    <div id="userHunger"></div>
+                </div>
+                <div class="hunger"><i class="fas fa-utensils"></i>
+                    <div id="userThirsty"></div>
+                </div>
+                <div id="userApbox" class="apbox"><i class="fas fa-shield-alt"></i>
+                    <div id="userAp"></div>
+                </div>
+                <div id="userHpbox" class="hpbox"><i class="fas fa-heart"></i>
+                    <div id="userHp"></div>
+                </div>
+            </section>
+        </section>
+    
+        <section class="dolphin2-container">
+            <section class="main">
+                <div class="logos"></div>
+                <div class="welcome_text">오늘도 버블을 플레이 해주셔서 감사합니다!</div>
+        
+                <!--우측 상단(시간 및 유저 돈)-->
+                <div class="money_boxs">
+                    <i class="fas fa-won-sign"></i>&nbsp;&nbsp;<span id="money">0</span>
+                    <i class="fas fa-credit-card"></i>&nbsp;&nbsp;<span id="bank">0</span>
+                    <i class="fas fa-coins"></i>&nbsp;&nbsp;<span id="credit">0</span>
+                </div>
+                <div class="user_infos">
+                    <i class="fas fa-briefcase"></i>직업: <span id="userJob"></span>&nbsp;&nbsp;
+                    <i class="fas fa-user-tag"></i>이름: <span id="userName"></span>
+                </div>
+    
+                <!--우측 하단(유저상태)-->
+                <div id="healthinfo_wrap" class="">
+                    <div id="userApbox" class="apbox" style="height: 4px;">
+                        <div id="userAp"></div>
+                    </div>
+        
+                    <div id="userHpbox" class="hpbox" style="height: 15px;">
+                        <div id="userHp"></div>
+                    </div>
+        
+        
+                    <div class="etcbox" style="margin-top: 10px;"><i class="fas fa-tint"></i>
+                        <div class="thirsty" style="height: 10px;  margin-right: 15px;">
+                            <div id="userThirsty"></div>
+                        </div><i class="fas fa-utensils"></i>
+                        <div class="hunger" style="height: 10px;">
+                            <div id="userHunger"></div>
+                        </div>
+                    </div>
+        
+        
+                </div>
+            </section>
+        </section>
+        
+        <section class="hudContainer202508">
+            <div class="main">
+                <div class="header">
+                    <!-- logo -->
+                    <div class="logo">
+                        
+                    </div>
+                    <!-- text content -->
+                    <div class="text">
+                        <div id="time">
+                            03:34 오전
+                        </div>
+                        <div class="date">
+                            <div id="day">
+                                23
+                            </div>
+                            <div class="dayText">
+                                <div id="monthText">
+                                    여름
+                                </div>
+                                <div id="dayText">
+                                    수요일
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="status">
+                    <div class="player">
+                        <div class="flex-box">
+                            <div class="box">
+                                <div>
+                                    <i class="fa-solid fa-heart" style="color: #ff424c;"></i>
+                                </div>
+                                <div class="hp">
+                                    <div id="userHp"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-box">
+                            <div class="box">
+                                <div>
+                                    <i class="fa-solid fa-shield-halved" style="color: #ffd700;"></i>
+                                </div>
+                                <div class="ap">
+                                    <div id="userAp"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-box">
+                            <div class="box">
+                                <div>
+                                    <i class="fa-solid fa-utensils" style="color: #fe8e05;"></i>
+                                </div>
+                                <div class="hunger">
+                                    <div id="userHunger"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="box">
+                                <div>
+                                    <i class="fa-solid fa-droplet" style="color: #5490ff;"></i>
+                                </div>
+                                <div class="thirsty">
+                                    <div id="userThirsty"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="money-box">
+                    <div>
+                        <div>
+                            <i class="fa-solid fa-dollar-sign" style="color: #ffd700;"></i>
+                        </div>
+                        <div id="money">0</div>
+                    </div>
+                    <div>
+                        <div>
+                            <i class="fa-solid fa-building-columns" style="color: #ffd700;"></i>
+                        </div>
+                        <div id="bank">0</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <section id="speedmeterWrap">
+        <audio src="https://cdn.discordapp.com/attachments/816029297768005712/951158037605916693/seatbelt.mp3" loop id="seatSound"></audio>
+        <div class="speedmeterBG"></div>
+        <div class="niddleBox"></div>
+
+        <div class="niddleLine">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -10 221 220">
+                <g><path id="niddle" d="M186.64,151.32c8.8-14.89,13.86-32.26,13.86-50.82C200.5,45.27,155.73,.5,100.5,.5S.5,45.27,.5,100.5c0,18.55,5.06,35.92,13.86,50.82"/></g>
+            </svg>
+        </div>
+
+        <div class="gearBox">
+            <ul id="setGear">
+                <li>P</li>
+                <li>R</li>
+                <li>N</li>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+                <li>7</li>
+                <li>8</li>
+            </ul>
+        </div>
+
+        <div id="speed">0</div>
+        
+        <div class="durabilityBox" id="durabilityWrap">
+            <div id="Durability"></div>
+        </div>
+    </section>
+    
+    <section id="radioWrap">
+        <section class="radialMenu icon left" id="radio_seatbelt">안전벨트 착용</section>
+        <section class="radialMenu icon left" id="radio_carlock">차량 문 잠그기</section>
+        <!-- <section class="radialMenu icon left" id="radio_Lucky">오늘의 운세</section> -->
+        <section class="radialMenu icon left" id="radio_myinformation">내 정보</section>
+        <section class="radialMenu icon left" id="radio_Dice">주사위 사용</section>
+        <section class="radialMenu icon right" id="radio_inventory">인벤토리</section>
+        <section class="radialMenu icon right" id="radio_ui">UI 설정</section>
+        <!-- <section class="radialMenu icon right" id="radio_quickSlot">퀵슬롯 설정</section> -->
+        <section data-status="" id="radio_voice">
+            <div>
+                <p>음성범위</p>
+                <p class="voiceLock">※ 입막음 상태입니다.</p>
+            </div>
+            <ul id="radio_voice_set">
+                <li>입막음</li>
+                <li>귓속말</li>
+                <li class="active">보통</li>
+                <li>외치기</li>
+            </ul>
+        </section>
+    </section>
+
+    <div id="myinformationWrap">
+        <h2>내 정보</h2>
+        <p id="informationExit"></p>
+        <div class="copy myName"></div>
+        <div class="copy myAge"></div>
+        <div class="copy myNumber"></div>
+        <div class="copy myJob"></div>
+        <div class="copy myPhonenumber"></div>
+        <div class="copy myCarNumber"></div>
+    </div>
+    
+    <section id="quickslotSettingWrap">
+        <div class="header">
+            <p>퀵슬롯 아이템</p>
+            <p id="quickslotSettingExit"></p>
+        </div>
+        <section id="quickslotItems"></section>
+        <section id="quickLength">
+            <p class="header">퀵슬롯 개수</p>
+            <ul>
+                <li class="quickLengthBtn" id="plus">+</li>
+                <li class="quickLengthBtn" id="minus">-</li>
+            </ul>
+        </section>
+    </section>
+    
+    <!--가운데 하단(퀵슬롯) // 차량-->
+    <!-- <section id="quickslotWrap" class="pers">
+        <div class="box sortable"></div>
+        <div class="box sortable"></div>
+        <div class="box sortable"></div>
+        <div class="box sortable"></div>
+        <div class="box sortable"></div>
+        <div class="box sortable"></div>
+        <div class="box sortable"></div>
+        <div class="box sortable"></div>
+        <div class="box sortable"></div>
+    </section> -->
+
+    <!-- 설정 UI -->
+    <section class="setting">
+        <div class="main_box">
+            <div class="title">인터페이스 설정</div>
+            <div class="close">
+                닫기 X
+            </div>
+            <div class="menu_box">
+                <div class="box"><span>&nbsp;&nbsp;선택형 인터페이스</span>
+                    <label class="switch"><input type="checkbox" onclick="SettingToggle('property')">
+                        <select>
+                            <option value="1">1번</option>
+                            <option value="2">2번</option>
+                            <option value="3">3번</option>
+                            <option value="4">4번</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="box"><span>&nbsp;&nbsp;미션</span>
+                    <label class="switch"><input type="checkbox" onclick="SettingToggle('quest')"><span id="quest" class="slider round"></span></label>
+                </div>
+                <div class="box"><span><i class="fa-solid fa-sitemap"></i>&nbsp;&nbsp;퀵슬롯</span>
+                    <label class="switch"><input type="checkbox" onclick="SettingToggle('qslot')"><span id="qslot" class="slider round"></span></label>
+                </div>
+                <div class="box"><span>퀵슬롯 개수</span>
+                    <div class="slot-amount">
+                        <button class="qslot_amount_btn" data-plus="+1">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                        <p id="qslot_amount">9</p>
+                        <button class="qslot_amount_btn" data-plus="-1">
+                            <i class="fa-solid fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box"><span>&nbsp;&nbsp;호출</span>
+                    <label class="switch"><input type="checkbox" onclick="SettingToggle('call')"><span id="call" class="slider round"></span></label>
+                </div>
+                <div class="box"><span>&nbsp;&nbsp;다크모드</span>
+                    <label class="switch"><input type="checkbox" onclick="SettingToggle('darkmode')"><span id="darkmode" class="slider round"></span></label>
+                </div>
+                <div class="box"><span>&nbsp;&nbsp;차량 속도계</span>
+                    <label class="switch"><input type="checkbox" onclick="SettingToggle('speedmeter')"><span id="speedmeter" class="slider round"></span></label>
+                </div>
+                <!-- <div class="box"><span>&nbsp;&nbsp;디지털 이름표 사용</span>
+                    <label class="switch"><input type="checkbox" onclick="SettingToggle('nuiNames')"><span id="nuiNames" class="slider round"></span></label>
+                </div> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 호출창 -->
+    <div id="smallnotify">
+    </div>
+
+    <!-- 마켓 -->
+    <section class="market">
+        <header>
+            <h1>버블 MARKET</h1>
+            <button id="close">
+                닫기
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </button>
+        </header>
+        <article id="marketList"></article>
+    </section>
+</body>
+
+</html>
